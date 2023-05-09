@@ -47,8 +47,13 @@ public class NetworkingServer {
                 String msgFromClient = br.readLine();
                 System.out.println("Message received from client = " + msgFromClient);
 
-                // Send response to the client
-                if (msgFromClient != null && !msgFromClient.equalsIgnoreCase("bye")) {
+
+                if (msgFromClient != null && msgFromClient.equalsIgnoreCase("jonatan")) {
+                    OutputStream clientOut = client.getOutputStream();
+                    PrintWriter pw = new PrintWriter(clientOut, true);
+                    String ansMsg = "Sup " + msgFromClient;
+                    pw.println(ansMsg);
+                } else if (msgFromClient != null && !msgFromClient.equalsIgnoreCase("bye")) {
                     OutputStream clientOut = client.getOutputStream();
                     PrintWriter pw = new PrintWriter(clientOut, true);
                     String ansMsg = "Hello, " + msgFromClient;
@@ -57,8 +62,8 @@ public class NetworkingServer {
 
                 // Close sockets
                 if (msgFromClient != null && msgFromClient.equalsIgnoreCase("bye")) {
-                    server.close();
                     client.close();
+                    server.close();
                     break;
                 }
 
